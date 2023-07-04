@@ -1,5 +1,5 @@
-import random
-from pygame import draw
+from random import randint
+from pygame import draw as pg_draw
 from global_vars import *
 
 
@@ -13,8 +13,8 @@ class Apple:
     def generate_new_position(self, exception_positions=[]):
         generate=True
         while generate:
-            x_new_pos = random.randint(0, GRID_WIDTH-1)
-            y_new_pos = random.randint(0, GRID_HEIGHT-1)
+            x_new_pos = randint(0, GRID_WIDTH-1)
+            y_new_pos = randint(0, GRID_HEIGHT-1)
 
             if (x_new_pos, y_new_pos) not in exception_positions:
                 self.position = (x_new_pos, y_new_pos)
@@ -24,7 +24,7 @@ class Apple:
         x_window_pos = self.position[0]*CELL_SIZE
         y_window_pos = self.position[1]*CELL_SIZE
 
-        draw.rect(
+        pg_draw.rect(
             surface,
             APPLE_COLOR,
             (
