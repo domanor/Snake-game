@@ -1,5 +1,5 @@
 import enum
-import pygame
+from pygame import draw
 from global_vars import *
 
 
@@ -22,13 +22,39 @@ class Snake:
         self.direction = direction.right
     
     def is_collision(self) -> bool:
-        ...
+        head = self.body[0]
+        if head in self.body[1:]:
+            return True
+        else:
+            return False
 
     def move(self):
-        ...
+        dx, dy = self.shifts_in_directions[self.direction]
+
+        x_new_pos = self.body[0][0] + dx
+        y_new_pos = self.body[0][0] + dy
+
+        self.body.insert(0, (x_new_pos, y_new_pos))
+        self.body.pop()
+
+    def grow(self, increase=1):
+        tail = self.body[-1]
+        increased_tail = [tail]*increase
+
+        self.body.extend(increased_tail)
     
-    def grow(self):
-        ...
-    
-    def draw(self):
-        ...
+    def draw(self, surface):
+        for cell in self.body:
+            x_window_pos = cell[0]*CELL_SIZE
+            y_window_pos = cell[1]*CELL_SIZE
+
+            draw.rect(
+                surface, 
+                SNAKE_COLOR, 
+                (   
+                    x_window_pos, 
+                    y_window_pos, 
+                    CELL_SIZE, 
+                    CELL_SIZE
+                )
+            )
