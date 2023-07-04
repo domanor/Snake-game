@@ -42,6 +42,7 @@ def main(window):
                 running = False
             
             elif event.type == pygame.KEYDOWN:
+
                 if event.key == pygame.K_w and snake.direction != direction.down:
                     snake.direction = direction.up
                 elif event.key == pygame.K_s and snake.direction != direction.up:

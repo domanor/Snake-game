@@ -2,9 +2,9 @@
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 
-BACKGROUND_COLOR = (110, 170, 210)  #light blue
-APPLE_COLOR = (255, 0, 0)           #red
-SNAKE_COLOR = (0, 255, 0)           #green
+BACKGROUND_COLOR = (180, 210, 255)  #light blue
+APPLE_COLOR = (200, 0, 0)           #dark red
+SNAKE_COLOR = (0, 100, 0)           #green
 
 WINDOW_WIDTH = 600
 WINDOW_HEIGHT = 600
