@@ -2,6 +2,7 @@ from enum import Enum
 from pygame import draw as pg_draw
 from global_vars import *
 
+all = ['direction', 'Snake']
 
 direction = Enum(
     value='direction',
