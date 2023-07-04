@@ -33,7 +33,7 @@ class Snake:
         dx, dy = shifts_in_directions[self.direction]
 
         x_new_pos = self.body[0][0] + dx
-        y_new_pos = self.body[0][0] + dy
+        y_new_pos = self.body[0][1] + dy
 
         self.body.insert(0, (x_new_pos, y_new_pos))
         self.body.pop()
