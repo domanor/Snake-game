@@ -35,6 +35,15 @@ class Snake:
         x_new_pos = self.body[0][0] + dx
         y_new_pos = self.body[0][1] + dy
 
+        if x_new_pos == -1:
+            x_new_pos = GRID_WIDTH-1
+        elif x_new_pos == GRID_WIDTH:
+            x_new_pos = 0
+        elif y_new_pos == -1:
+            y_new_pos = GRID_HEIGHT-1
+        elif y_new_pos == GRID_HEIGHT:
+            y_new_pos = 0
+
         self.body.insert(0, (x_new_pos, y_new_pos))
         self.body.pop()
 
