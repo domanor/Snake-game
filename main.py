@@ -34,6 +34,17 @@ def main(window):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+            
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_w and snake.direction != direction.down:
+                    snake.direction = direction.up
+                elif event.key == pygame.K_s and snake.direction != direction.up:
+                    snake.direction = direction.down
+                elif event.key == pygame.K_a and snake.direction != direction.right:
+                    snake.direction = direction.left
+                elif event.key == pygame.K_d and snake.direction != direction.left:
+                    snake.direction = direction.right
+            
         loop(window)
 
         clock.tick(FPS)    
