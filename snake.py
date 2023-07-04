@@ -1,5 +1,6 @@
 import enum
 import pygame
+from global_vars import *
 
 
 direction = enum.Enum(
@@ -17,5 +18,17 @@ class Snake:
     }
 
     def __init__(self):
-        self.body = []
-        self.direction = 'right'
+        self.body = [(GRID_WIDTH//2, GRID_HEIGHT//2)]
+        self.direction = direction.right
+    
+    def is_collision(self) -> bool:
+        ...
+
+    def move(self):
+        ...
+    
+    def grow(self):
+        ...
+    
+    def draw(self):
+        ...
