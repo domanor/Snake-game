@@ -4,15 +4,21 @@ from snake import *
 import food
 
 
-snake = None
-apple = None
 running = None
 
-def loop(window):
-    global running, snake, apple
+def loop(window, snake, apple):
+    global running
 
     snake.move()
     
+    if snake.is_collision():
+        running = False
+    
+    head_position = snake.body[0]
+    if head_position == apple.position:
+        snake.grow()
+        apple.generate_new_position()
+
     window.fill(BACKGROUND_COLOR)
     snake.draw(window)
     apple.draw(window)
@@ -20,7 +26,7 @@ def loop(window):
 
 
 def main(window):
-    global running, snake, apple
+    global running
 
     pygame.init()
     pygame.display.set_caption('game SNAKE')
@@ -45,7 +51,7 @@ def main(window):
                 elif event.key == pygame.K_d and snake.direction != direction.left:
                     snake.direction = direction.right
             
-        loop(window)
+        loop(window, snake, apple)
 
         clock.tick(FPS)    
     pygame.quit()
