@@ -1,7 +1,8 @@
 import pygame
-from global_vars import *
-from snake import *
-import food
+from src.global_vars import *
+from src.dir import direction
+import src.snake
+import src.food
 
 
 running = None
@@ -29,10 +30,9 @@ def main(window):
     global running
 
     pygame.init()
-    pygame.display.set_caption('game SNAKE')
 
-    snake = Snake()
-    apple = food.Apple()
+    snake = src.snake.Snake()
+    apple = src.food.Apple()
     clock = pygame.time.Clock()
     
     running = True
@@ -58,8 +58,9 @@ def main(window):
     pygame.quit()
 
 
-
 if __name__ == '__main__':
     my_window = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
+    pygame.display.set_caption('game SNAKE')
+
 
     main(my_window)

@@ -1,20 +1,7 @@
-from enum import Enum
 from pygame import draw as pg_draw
-from global_vars import *
+from .dir import direction, shifts_in_directions
+from .global_vars import *
 
-all = ['direction', 'Snake']
-
-direction = Enum(
-    value='direction',
-    names='up down left right',
-)
-
-shifts_in_directions = {
-    direction.up:   (0, -1),
-    direction.down: (0, 1),
-    direction.left: (-1, 0),
-    direction.right:(1, 0),
-}
 
 class Snake:
 

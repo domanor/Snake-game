@@ -1,6 +1,6 @@
 from random import randint
 from pygame import draw as pg_draw
-from global_vars import *
+from .global_vars import *
 
 
 class Apple:
