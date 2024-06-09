@@ -1,11 +1,12 @@
 import pygame
-from src.global_vars import *
-from src.dir import direction
+
+from src.direction import Direction
+import src.food 
+import src.const as CONST
 import src.snake
-import src.food
 
 
-running = None
+running = False
 
 def loop(window, snake, apple):
     global running
@@ -20,7 +21,7 @@ def loop(window, snake, apple):
         snake.grow()
         apple.generate_new_position()
 
-    window.fill(BACKGROUND_COLOR)
+    window.fill(CONST.BACKGROUND_COLOR)
     snake.draw(window)
     apple.draw(window)
     pygame.display.update()
@@ -34,33 +35,45 @@ def main(window):
     snake = src.snake.Snake()
     apple = src.food.Apple()
     clock = pygame.time.Clock()
-    
+
     running = True
+    is_pressed_key = False
+
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
             
-            elif event.type == pygame.KEYDOWN:
+            elif event.type == pygame.KEYDOWN and is_pressed_key == False:
 
-                if event.key == pygame.K_w and snake.direction != direction.down:
-                    snake.direction = direction.up
-                elif event.key == pygame.K_s and snake.direction != direction.up:
-                    snake.direction = direction.down
-                elif event.key == pygame.K_a and snake.direction != direction.right:
-                    snake.direction = direction.left
-                elif event.key == pygame.K_d and snake.direction != direction.left:
-                    snake.direction = direction.right
-            
+                if event.key == pygame.K_w and snake.direction != Direction.down:
+                    snake.direction = Direction.up
+                    is_pressed_key = True
+
+                elif event.key == pygame.K_s and snake.direction != Direction.up:
+                    snake.direction = Direction.down
+                    is_pressed_key = True
+
+                elif event.key == pygame.K_a and snake.direction != Direction.right:
+                    snake.direction = Direction.left
+                    is_pressed_key = True
+
+                elif event.key == pygame.K_d and snake.direction != Direction.left:
+                    snake.direction = Direction.right
+                    is_pressed_key = True
+        
         loop(window, snake, apple)
+        is_pressed_key = False
 
-        clock.tick(FPS)    
+        clock.tick(CONST.FPS)    
+
     pygame.quit()
 
 
 if __name__ == '__main__':
-    my_window = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
-    pygame.display.set_caption('game SNAKE')
-
+    my_window = pygame.display.set_mode(
+        (CONST.WINDOW_WIDTH, CONST.WINDOW_HEIGHT)
+    )
+    pygame.display.set_caption('SNAKE')
 
     main(my_window)

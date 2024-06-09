@@ -1,57 +1,65 @@
-from pygame import draw as pg_draw
-from .dir import direction, shifts_in_directions
-from .global_vars import *
+from pygame import draw as pygame_draw
 
+from src.direction import Direction, shifts_in_directions
+import src.const as CONST
+from src.position import Position
 
 class Snake:
 
     def __init__(self):
-        self.body = [(GRID_WIDTH//2, GRID_HEIGHT//2)]
-        self.direction = direction.right
+        self.body = [CONST.START_POSITION]
+        self.direction = Direction.right
     
-    def is_collision(self) -> bool:
-        head = self.body[0]
-        if head in self.body[1:]:
-            return True
-        else:
-            return False
+
+    def is_collision(self):
+        head_position = self.body[0]
+        return head_position in self.body[1:]
+
 
     def move(self):
         dx, dy = shifts_in_directions[self.direction]
+        head_position = self.body[0]
 
-        x_new_pos = self.body[0][0] + dx
-        y_new_pos = self.body[0][1] + dy
+        new_position = Position(
+            head_position.x + dx,
+            head_position.y + dy
+        )
 
-        if x_new_pos == -1:
-            x_new_pos = GRID_WIDTH-1
-        elif x_new_pos == GRID_WIDTH:
-            x_new_pos = 0
-        elif y_new_pos == -1:
-            y_new_pos = GRID_HEIGHT-1
-        elif y_new_pos == GRID_HEIGHT:
-            y_new_pos = 0
+        if new_position.x == -1:
+            new_position.x = CONST.GRID_WIDTH - 1
 
-        self.body.insert(0, (x_new_pos, y_new_pos))
+        elif new_position.x == CONST.GRID_WIDTH:
+            new_position.x = 0
+
+        elif new_position.y == -1:
+            new_position.y = CONST.GRID_HEIGHT - 1
+
+        elif new_position.y == CONST.GRID_HEIGHT:
+            new_position.y = 0
+
+        self.body.insert(0, new_position)
         self.body.pop()
 
+
     def grow(self, increase=1):
-        tail = self.body[-1]
-        increased_tail = [tail]*increase
+        tail_position = self.body[-1]
+        increased_tail = [tail_position]*increase
 
         self.body.extend(increased_tail)
     
-    def draw(self, surface):
-        for cell in self.body:
-            x_window_pos = cell[0]*CELL_SIZE
-            y_window_pos = cell[1]*CELL_SIZE
 
-            pg_draw.rect(
+    def draw(self, surface):
+        for cell_snake_position in self.body:
+            window_position = cell_snake_position*CONST.CELL_SIZE
+
+            pygame_draw.rect(
                 surface, 
-                SNAKE_COLOR, 
+                CONST.SNAKE_COLOR, 
                 (   
-                    x_window_pos, 
-                    y_window_pos, 
-                    CELL_SIZE, 
-                    CELL_SIZE
+                    window_position.x, 
+                    window_position.y, 
+                    CONST.CELL_SIZE, 
+                    CONST.CELL_SIZE
                 )
             )
+

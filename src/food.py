@@ -1,36 +1,42 @@
-from random import randint
-from pygame import draw as pg_draw
-from .global_vars import *
+import random
+
+from pygame import draw as pygame_draw
+
+import src.const as CONST
+from src.position import Position
 
 
 class Apple:
 
     def __init__(self):
         self.generate_new_position(
-            exception_positions=[(GRID_WIDTH//2, GRID_HEIGHT//2)]
+            exception_positions=[CONST.START_POSITION]
         )
     
+
     def generate_new_position(self, exception_positions=[]):
         generate=True
         while generate:
-            x_new_pos = randint(0, GRID_WIDTH-1)
-            y_new_pos = randint(0, GRID_HEIGHT-1)
+            new_position = Position(
+                random.randint(0, CONST.GRID_WIDTH-1),
+                random.randint(0, CONST.GRID_HEIGHT-1)
+            )
 
-            if (x_new_pos, y_new_pos) not in exception_positions:
-                self.position = (x_new_pos, y_new_pos)
+            if new_position not in exception_positions:
+                self.position = new_position
                 generate=False
 
-    def draw(self, surface):
-        x_window_pos = self.position[0]*CELL_SIZE
-        y_window_pos = self.position[1]*CELL_SIZE
 
-        pg_draw.rect(
+    def draw(self, surface):
+        window_position = self.position*CONST.CELL_SIZE
+
+        pygame_draw.rect(
             surface,
-            APPLE_COLOR,
+            CONST.APPLE_COLOR,
             (
-                x_window_pos,
-                y_window_pos,
-                CELL_SIZE,
-                CELL_SIZE,
+                window_position.x,
+                window_position.y,
+                CONST.CELL_SIZE,
+                CONST.CELL_SIZE,
             )
         )
